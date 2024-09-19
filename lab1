@@ -1,0 +1,94 @@
+struct House {
+    var numberOfRooms: Int?
+    var area: Double
+    var hasPool: Bool?
+}
+
+func describeHouse(house: House) {
+    var description = "Houe description: \n"
+    
+    if let numberOfRooms = house.numberOfRooms {
+        description += "Numbers of rooms: \(numberOfRooms)\n"
+    } else {
+        description += "Numbers of rooms: not definded\n"
+    }
+    
+    description += "Area: \(house.area) square meters\n"
+    
+    if let hasPool = house.hasPool {
+        description += "Has a pool: \(hasPool)\n"
+    } else {
+        description += "Has a pool: not definded\n"
+    }
+    
+    print(description)
+}
+
+extension House {
+    func describeHouse() {
+        var description = "Houe description: \n"
+        
+        if let numberOfRooms = numberOfRooms {
+            description += "Numbers of rooms: \(numberOfRooms)\n"
+        } else {
+            description += "Numbers of rooms: not definded\n"
+        }
+        
+        description += "Area: \(area) square meters\n"
+        
+        if let hasPool = hasPool {
+            description += "Has a pool: \(hasPool)\n"
+        } else {
+            description += "Has a pool: not definded\n"
+        }
+        
+        print(description)    }
+}
+
+//let firstHouse = House(numberOfRooms: 3, area: 120.5, hasPool: true)
+//let secondHouse = House(numberOfRooms: nil, area: 85.0, hasPool: nil)
+
+//describeHouse(house: firstHouse)
+//describeHouse(house: secondHouse)
+
+//firstHouse.describeHouse()
+//secondHouse.describeHouse()
+
+var houseList: [House] = [
+     House(numberOfRooms: 3, area: 120.5, hasPool: true),
+     House(numberOfRooms: nil, area: 85.0, hasPool: nil),
+     House(numberOfRooms: 5, area: 200.0, hasPool: true),
+     House(numberOfRooms: 2, area: 85.0, hasPool: false)
+]
+
+for house in houseList {
+    describeHouse(house: house)
+}
+
+class Owner {
+    var name: String
+    var house: House
+    
+    init(name: String, house: House) {
+        self.name = name
+        self.house = house
+    }
+    
+    func descriptionOwnerHouse() {
+        print("Owner: \(name)")
+        house.describeHouse()
+    }
+}
+
+let firstOwner = Owner(name: "Ann", house: houseList[0])
+let secondOwner = Owner(name: "Tom", house: houseList[1])
+
+firstOwner.descriptionOwnerHouse()
+secondOwner.descriptionOwnerHouse()
+
+enum HouseType {
+    case apartment
+    case datached
+    case semiDetached
+}
+
