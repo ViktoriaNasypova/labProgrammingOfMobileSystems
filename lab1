@@ -2,6 +2,7 @@ struct House {
     var numberOfRooms: Int?
     var area: Double
     var hasPool: Bool?
+    var houseType: HouseType
 }
 
 func describeHouse(house: House) {
@@ -21,6 +22,8 @@ func describeHouse(house: House) {
         description += "Has a pool: not definded\n"
     }
     
+    description += "House type: \(house.houseType) \n"
+
     print(description)
 }
 
@@ -42,6 +45,8 @@ extension House {
             description += "Has a pool: not definded\n"
         }
         
+        description += "House type: \(houseType) \n"
+
         print(description)    }
 }
 
@@ -55,10 +60,10 @@ extension House {
 //secondHouse.describeHouse()
 
 var houseList: [House] = [
-     House(numberOfRooms: 3, area: 120.5, hasPool: true),
-     House(numberOfRooms: nil, area: 85.0, hasPool: nil),
-     House(numberOfRooms: 5, area: 200.0, hasPool: true),
-     House(numberOfRooms: 2, area: 85.0, hasPool: false)
+    House(numberOfRooms: 3, area: 120.5, hasPool: true, houseType: .detached),
+    House(numberOfRooms: nil, area: 85.0, hasPool: nil, houseType: .apartment),
+    House(numberOfRooms: 5, area: 200.0, hasPool: true, houseType: .semiDetached),
+    House(numberOfRooms: 2, area: 85.0, hasPool: false, houseType: .apartment)
 ]
 
 for house in houseList {
@@ -88,7 +93,7 @@ secondOwner.descriptionOwnerHouse()
 
 enum HouseType {
     case apartment
-    case datached
+    case detached
     case semiDetached
 }
 
