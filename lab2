@@ -1,0 +1,42 @@
+//
+//  ContentView.swift
+//  lab2
+//
+//  Created by IPZ-31 on 27.09.2024.
+//
+
+import SwiftUI
+
+struct ContentView: View {
+    let attributedString = try! AttributedString(
+        markdown: """
+Birthday 27.09.2005.
+I live in Lviv region.
+I study at the National Forestry University, specialty 121 (Software Engineering).
+""")
+
+    var body: some View {
+        Text("Something about me)")
+               .font(.largeTitle.italic())
+
+        VStack {
+            Circle()
+                .fill(.brown)
+                .padding()
+                .overlay(
+                    Image(systemName: "star")
+                        .font(.system(size: 100))
+                        .foregroundColor(.white)
+                )
+            
+            Text("Viktoria Nasypova")
+                .font(.title)
+        }
+        
+        Text(attributedString)
+            .font(.system(size: 12, weight: .light, design: .serif))
+    }
+}
+#Preview {
+        ContentView()
+}
