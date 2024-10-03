@@ -8,35 +8,58 @@
 import SwiftUI
 
 struct ContentView: View {
-    let attributedString = try! AttributedString(
-        markdown: """
-Birthday 27.09.2005.
-I live in Lviv region.
-I study at the National Forestry University, specialty 121 (Software Engineering).
-""")
+    @State private var aboutMe: String = ""
 
-    var body: some View {
-        Text("Something about me)")
-               .font(.largeTitle.italic())
+        var body: some View {
+            Text("Something about me)")
+                .font(.largeTitle.italic())
+            ZStack{
+                RoundedRectangle(cornerRadius: 20)
+                    .foregroundStyle(.gray)
+                    .frame(width: 400,
+                           height:200)
+                    }
+                    VStack {
+                        Circle().stroke(.black, lineWidth: 10)
+                            .fill(.gray).frame(width: 200
+                            )
+                            .overlay(
+                                Image(systemName: "person")
+                                    .font(.system(size: 100))
+                                    .foregroundColor(.white)
+                            ).position(CGPoint(x: 190.0, y: -30.0))
+                        
+                        Text("Viktoria Nasypova")
+                            .font(.title)
+                    }
+                    VStack{
+                        Text(            """
+                                         Birthday 27.09.2005.
+                                         I live in Lviv region.
+                                         I study at the National Forestry University, specialty 121 (Software Engineering).
+                                         """)
+                        TextField(
+                            "coment"
+                            ,
+                            text: $aboutMe)
+                        .font(.system(size: 14, weight: .light, design: .serif
+                                     )
+                        )
+                    }
+                    .textFieldStyle(.roundedBorder)
+            Text(aboutMe)
+                .foregroundColor(.teal)
 
-        VStack {
-            Circle()
-                .fill(.brown)
-                .padding()
-                .overlay(
-                    Image(systemName: "star")
-                        .font(.system(size: 100))
-                        .foregroundColor(.white)
-                )
             
-            Text("Viktoria Nasypova")
-                .font(.title)
-        }
-        
-        Text(attributedString)
-            .font(.system(size: 12, weight: .light, design: .serif))
+            HStack{
+                Image("autumn")
+                Image( "lemon-cake")
+                Image("paint-brashes")
+            }
+                }
     }
-}
+
 #Preview {
-        ContentView()
+    ContentView()
 }
+    
