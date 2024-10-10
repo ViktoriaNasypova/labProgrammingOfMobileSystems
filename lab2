@@ -46,6 +46,7 @@ The image demonstrates my passion for poetry. I write a little poetry myself, if
     @State private var expandedIndex: Int? = nil
     
     var body: some View {
+        ScrollView {
         ZStack{
             RoundedRectangle(cornerRadius: 20)
                 .foregroundStyle(.gray)
@@ -104,53 +105,56 @@ The image demonstrates my passion for poetry. I write a little poetry myself, if
                 ForEach(0 ..< hobbies.count, id: \.self) { index in
                     Image(uiImage: hobbies[0].image)
                         .resizable()
-//                    ScrollView {
                     Text(hobbies[0].description)
                         .lineLimit(expandedIndex == index ? nil : 10)
                         .frame(height: expandedIndex == index ? nil : 60)
-                    //                            .lineLimit(3)
-                    //                           .frame(height: 280)
-                    //                    }.defaultScrollAnchor(.bottom)
+                    
+                    Image(uiImage: hobbies[1].image)
+                        .resizable()
+                        Text(hobbies[1].description)
+                        .lineLimit(expandedIndex == index ? nil : 10)
+                        .frame(height: expandedIndex == index ? nil : 60)
+                    
+                    Image(uiImage: hobbies[2].image)
+                        .resizable()
+                        Text(hobbies[2].description)
+                        .lineLimit(expandedIndex == index ? nil : 10)
+                        .frame(height: expandedIndex == index ? nil : 60)
+                    
+                    Image(uiImage: hobbies[3].image)
+                        .resizable()
+                        Text(hobbies[3].description)
+                        .lineLimit(expandedIndex == index ? nil : 10)
+                        .frame(height: expandedIndex == index ? nil : 60)
+                    
+                    Image(uiImage: hobbies[4].image)
+                        .resizable()
+                        Text(hobbies[4].description)
+                        .lineLimit(expandedIndex == index ? nil : 10)
+                        .frame(height: expandedIndex == index ? nil : 60)
+                    
                     Button(action: {
-                        expandedIndex = (expandedIndex == index) ? nil : index // Toggle expanded state
+                        expandedIndex = (expandedIndex == index) ? nil : index
                     }) {
                         Text(expandedIndex == index ? "See Less" : "See More")
                             .foregroundColor(.blue)
                             .padding(.top, 5)
                     }
-                    Image(uiImage: hobbies[1].image)
-                        .resizable()
-                    ScrollView {
-                        Text(hobbies[1].description)
-                    }
-                    .defaultScrollAnchor(.bottom)
-                    Image(uiImage: hobbies[2].image)
-                        .resizable()
-                    ScrollView {
-                        Text(hobbies[2].description)
-                    }
-                    .defaultScrollAnchor(.bottom)
-                    Image(uiImage: hobbies[3].image)
-                        .resizable()
-                    ScrollView {
-                        Text(hobbies[3].description)
-                    }
-                    .defaultScrollAnchor(.bottom)
-                    Image(uiImage: hobbies[4].image)
-                        .resizable()
-                    ScrollView {
-                        Text(hobbies[4].description)
-                    }
-                    .defaultScrollAnchor(.bottom)
+                    
                 }
-
+                
             }
             .scaledToFill()
             .background(Color(red: 200/255, green: 200/255, blue: 230/255))
+            .frame(height: 280)
+
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()
+        }
+        .defaultScrollAnchor(.bottom)
     }
+        
 }
 
 #Preview {
