@@ -6,12 +6,32 @@
 //
 
 import SwiftUI
+struct Hobby {
+    let image: UIImage
+    let description: String
+}
 
 struct ContentView: View {
-    @State private var aboutMe: String = ""
-
+    @State private var writeSumthing: String = ""
+    @State private var isButtonClick = true
+    @State private var hobbies: [Hobby] = [
+        Hobby(image: UIImage(named: "lviv")!,
+              description: """
+Lviv is the city I was born in and adore. I also adore the rain that passes through its narrow passages.
+The city in which I study and which inspires me so much that I write poetry while walking by the parks, on my way home, or while spending time at the university.
+A city with numerous coffee shops and an absolute lack of desire to drink tea.
+"""),
+        Hobby(image: UIImage(named: "cake")!,
+              description: """
+The picture shows one of my hobbies. I love baking as well as pastries. I have been learning to cook since I was 12. And you know, I love to bake cakes and decorate them using all my creativity, provided I have the products available to me and some wishes of the people for whom I do it.
+"""),
+        Hobby(image: UIImage(named: "paint")!,
+              description: """
+The picture shows my very first hobby. After burning out, I gave it up, but I still love to draw something simple to this day. I have to say that I adore art because it can inspire!
+""")
+    ]
+    
     var body: some View {
-        
         ZStack{
             RoundedRectangle(cornerRadius: 20)
                 .foregroundStyle(.gray)
@@ -19,94 +39,108 @@ struct ContentView: View {
             Text("Something about me)")
                 .font(.largeTitle.italic())
                 .offset(y: -50)
+            VStack {
+                TextField("Enter sumthing text...", text: $writeSumthing)
+                           .textFieldStyle(RoundedBorderTextFieldStyle())
+                           .padding()
+                   }
+                   .padding()
         }
-        VStack {
-            Circle().stroke(.black, lineWidth: 10)
-                .fill(.gray)
-                .frame(
-                    width: 150,
-                    height: 150
-                )
-                .overlay(
-                    Image(systemName: "person")
-                        .font(.system(size: 100))
-                        .foregroundColor(.white)
-                )
-            Text("Viktoria Nasypova")
-                .font(.title)
-        }.offset(y: -100)
         VStack{
-            Text("""
+            VStack {
+                Circle().stroke(.black, lineWidth: 7)
+                    .fill(.gray)
+                    .frame(
+                        width: 150,
+                        height: 150
+                    )
+                    .overlay(
+                        Image(systemName: "person")
+                            .font(.system(size: 100))
+                            .foregroundColor(.white)
+                    )
+                Text("Viktoria Nasypova")
+                    .font(.title)
+                Text("""
                  Birthday 27.09.2005.
                  I live in Lviv region.
                  I study at the National Forestry University, specialty 121 (Software Engineering).
-                 """)
+                 """).frame(height: 150)
+                    .padding(.top, -30)
+
+            }
+//            .offset(y: -100)
+            .padding(.top, -100)
             Button(action: {
-                //                       print("Button Clicked!")
+                withAnimation {
+                    self.isButtonClick.toggle()
+                }
             }) {
-                Text(" Follow me! ")
+                Text(isButtonClick ? "Follow me!" : "Unfollow me!")
                     .fontWeight(.light)
                     .font(.system(size: 27))
+                    .padding()
                     .background(Color.blue)
                     .cornerRadius(5)
                     .foregroundColor(.white)
-                    .padding(5)
             }
-        }
-        .textFieldStyle(.roundedBorder)
-        Text(aboutMe)
-            .foregroundColor(.teal)
+            .textFieldStyle(.roundedBorder)
+        }.padding()
         
-        
-        ScrollView(.horizontal, showsIndicators: false) {        
+        ScrollView(.horizontal, showsIndicators: false){
             HStack(spacing: 10){
                 
-                ForEach(0 ..< 5) { item in
-                    Image( "lviv")
+                ForEach(0 ..< hobbies.count, id: \.self) { index in
+                    Image(uiImage: hobbies[0].image)
                         .resizable()
-                    Text("...")
-                    Image("cake")
+                    ScrollView {
+                        Text(hobbies[0].description)
+                    }
+                    .defaultScrollAnchor(.bottom)
+                    Image(uiImage: hobbies[1].image)
                         .resizable()
-                    Text("...")
-                    Image("paint")
+                    ScrollView {
+                        Text(hobbies[1].description)
+                    }
+                    .defaultScrollAnchor(.bottom)
+                    Image(uiImage: hobbies[2].image)
                         .resizable()
-                    Text("...")
+                    ScrollView {
+                        Text(hobbies[2].description)
+                    }
+                    .defaultScrollAnchor(.bottom)
                     Image("nailTech")
                         .resizable()
-                    Text("...")
+                    ScrollView {
+                        Text("""
+This image demonstrates a hobby that can also bring in money. I don't make much money from it, but it's enough to cover the cost of the material.My clients are my friends, which also allows me to see them regularly and have a good time talking.
+""")
+                    }
+                    .defaultScrollAnchor(.bottom)
                     Image("poetry")
                         .resizable()
-                    Text("...")
+                    ScrollView {
+                        Text("""
+And the last image demonstrates my passion for poetry. I write a little poetry myself, if you are interested, I am ready to declare it to you.
+""")                    }
+                    .defaultScrollAnchor(.bottom)
                 }
-//                GeometryReader { geometry in
-                
-//                    RoundedRectangle(cornerRadius: 30)
-//                            .fill(
-//                                LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)), Color(#colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing)
-//                            )
-//                        .rotation3DEffect(
-//                            Angle(
-//                                degrees: Double((geometry.frame(in: .global).minX - 20) / -20)
-//                            ),
-//                            axis: (x: 0, y: 1, z: 0),
-//                            anchor: .center,
-//                            anchorZ: 0.0,
-//                            perspective: 1.0
-//                        )
-//                }
-                    .frame(width: 250, height: 250)
-                            }
+            }
             .scaledToFill()
-//            .cornerRadius(20)
-                            .background(Color(red: 200/255, green: 200/255, blue: 230/255))
-                }
-//            }
-            .padding()
+            .background(Color(red: 200/255, green: 200/255, blue: 230/255))
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding()
+        
+//        VStack {
+//            TextField("Enter sumthing text...", text: $writeSumthing)
+//                       .textFieldStyle(RoundedBorderTextFieldStyle())
+//                       .padding()
+//               }
+//               .padding()
     }
-//    }
+}
 
 #Preview {
     ContentView()
 }
-    
