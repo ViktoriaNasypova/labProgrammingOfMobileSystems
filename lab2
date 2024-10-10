@@ -12,6 +12,11 @@ struct Hobby {
 }
 
 struct ContentView: View {
+    @State private var aboutMe: String = """
+                 Birthday 27.09.2005.
+                 I live in Lviv region.
+                 I study at the National Forestry University, specialty 121 (Software Engineering).
+                 """
     @State private var writeSumthing: String = ""
     @State private var isButtonClick = true
     @State private var hobbies: [Hobby] = [
@@ -28,8 +33,17 @@ The picture shows one of my hobbies. I love baking as well as pastries. I have b
         Hobby(image: UIImage(named: "paint")!,
               description: """
 The picture shows my very first hobby. After burning out, I gave it up, but I still love to draw something simple to this day. I have to say that I adore art because it can inspire!
+"""),
+        Hobby(image: UIImage(named: "nailTech")!,
+              description: """
+This image demonstrates a hobby that can also bring in money. I don't make much money from it, but it's enough to cover the cost of the material.My clients are my friends, which also allows me to see them regularly and have a good time talking.
+"""),
+        Hobby(image: UIImage(named: "poetry")!,
+              description: """
+The image demonstrates my passion for poetry. I write a little poetry myself, if you are interested, I am ready to declare it to you.
 """)
     ]
+    @State private var expandedIndex: Int? = nil
     
     var body: some View {
         ZStack{
@@ -61,12 +75,9 @@ The picture shows my very first hobby. After burning out, I gave it up, but I st
                     )
                 Text("Viktoria Nasypova")
                     .font(.title)
-                Text("""
-                 Birthday 27.09.2005.
-                 I live in Lviv region.
-                 I study at the National Forestry University, specialty 121 (Software Engineering).
-                 """).frame(height: 150)
-                    .padding(.top, -30)
+                Text(aboutMe)
+                    .frame(height: 150)
+                    .padding(.top, -35)
 
             }
 //            .offset(y: -100)
@@ -79,7 +90,7 @@ The picture shows my very first hobby. After burning out, I gave it up, but I st
                 Text(isButtonClick ? "Follow me!" : "Unfollow me!")
                     .fontWeight(.light)
                     .font(.system(size: 27))
-                    .padding()
+                    .padding(3)
                     .background(Color.blue)
                     .cornerRadius(5)
                     .foregroundColor(.white)
@@ -93,10 +104,20 @@ The picture shows my very first hobby. After burning out, I gave it up, but I st
                 ForEach(0 ..< hobbies.count, id: \.self) { index in
                     Image(uiImage: hobbies[0].image)
                         .resizable()
-                    ScrollView {
-                        Text(hobbies[0].description)
+//                    ScrollView {
+                    Text(hobbies[0].description)
+                        .lineLimit(expandedIndex == index ? nil : 10)
+                        .frame(height: expandedIndex == index ? nil : 60)
+                    //                            .lineLimit(3)
+                    //                           .frame(height: 280)
+                    //                    }.defaultScrollAnchor(.bottom)
+                    Button(action: {
+                        expandedIndex = (expandedIndex == index) ? nil : index // Toggle expanded state
+                    }) {
+                        Text(expandedIndex == index ? "See Less" : "See More")
+                            .foregroundColor(.blue)
+                            .padding(.top, 5)
                     }
-                    .defaultScrollAnchor(.bottom)
                     Image(uiImage: hobbies[1].image)
                         .resizable()
                     ScrollView {
@@ -109,35 +130,26 @@ The picture shows my very first hobby. After burning out, I gave it up, but I st
                         Text(hobbies[2].description)
                     }
                     .defaultScrollAnchor(.bottom)
-                    Image("nailTech")
+                    Image(uiImage: hobbies[3].image)
                         .resizable()
                     ScrollView {
-                        Text("""
-This image demonstrates a hobby that can also bring in money. I don't make much money from it, but it's enough to cover the cost of the material.My clients are my friends, which also allows me to see them regularly and have a good time talking.
-""")
+                        Text(hobbies[3].description)
                     }
                     .defaultScrollAnchor(.bottom)
-                    Image("poetry")
+                    Image(uiImage: hobbies[4].image)
                         .resizable()
                     ScrollView {
-                        Text("""
-And the last image demonstrates my passion for poetry. I write a little poetry myself, if you are interested, I am ready to declare it to you.
-""")                    }
+                        Text(hobbies[4].description)
+                    }
                     .defaultScrollAnchor(.bottom)
                 }
+
             }
             .scaledToFill()
             .background(Color(red: 200/255, green: 200/255, blue: 230/255))
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()
-        
-//        VStack {
-//            TextField("Enter sumthing text...", text: $writeSumthing)
-//                       .textFieldStyle(RoundedBorderTextFieldStyle())
-//                       .padding()
-//               }
-//               .padding()
     }
 }
 
