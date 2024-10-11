@@ -43,14 +43,13 @@ This image demonstrates a hobby that can also bring in money. I don't make much 
 The image demonstrates my passion for poetry. I write a little poetry myself, if you are interested, I am ready to declare it to you.
 """)
     ]
-    @State private var expandedIndex: Int? = nil
-    
+
     var body: some View {
         ScrollView {
         ZStack{
             RoundedRectangle(cornerRadius: 20)
                 .foregroundStyle(.gray)
-                .frame(height:200)
+                .frame(height:250)
             Text("Something about me)")
                 .font(.largeTitle.italic())
                 .offset(y: -50)
@@ -65,10 +64,7 @@ The image demonstrates my passion for poetry. I write a little poetry myself, if
             VStack {
                 Circle().stroke(.black, lineWidth: 7)
                     .fill(.gray)
-                    .frame(
-                        width: 150,
-                        height: 150
-                    )
+                    .frame(width: 150, height: 150)
                     .overlay(
                         Image(systemName: "person")
                             .font(.system(size: 100))
@@ -79,9 +75,8 @@ The image demonstrates my passion for poetry. I write a little poetry myself, if
                 Text(aboutMe)
                     .frame(height: 150)
                     .padding(.top, -35)
-
             }
-//            .offset(y: -100)
+            //            .offset(y: -100)
             .padding(.top, -100)
             Button(action: {
                 withAnimation {
@@ -98,65 +93,27 @@ The image demonstrates my passion for poetry. I write a little poetry myself, if
             }
             .textFieldStyle(.roundedBorder)
         }.padding()
-        
-        ScrollView(.horizontal, showsIndicators: false){
-            HStack(spacing: 10){
-                
-                ForEach(0 ..< hobbies.count, id: \.self) { index in
-                    Image(uiImage: hobbies[0].image)
-                        .resizable()
-                    Text(hobbies[0].description)
-                        .lineLimit(expandedIndex == index ? nil : 10)
-                        .frame(height: expandedIndex == index ? nil : 60)
+            
+            ScrollView(.horizontal, showsIndicators: false){
+                HStack(spacing: 10){
                     
-                    Image(uiImage: hobbies[1].image)
-                        .resizable()
-                        Text(hobbies[1].description)
-                        .lineLimit(expandedIndex == index ? nil : 10)
-                        .frame(height: expandedIndex == index ? nil : 60)
-                    
-                    Image(uiImage: hobbies[2].image)
-                        .resizable()
-                        Text(hobbies[2].description)
-                        .lineLimit(expandedIndex == index ? nil : 10)
-                        .frame(height: expandedIndex == index ? nil : 60)
-                    
-                    Image(uiImage: hobbies[3].image)
-                        .resizable()
-                        Text(hobbies[3].description)
-                        .lineLimit(expandedIndex == index ? nil : 10)
-                        .frame(height: expandedIndex == index ? nil : 60)
-                    
-                    Image(uiImage: hobbies[4].image)
-                        .resizable()
-                        Text(hobbies[4].description)
-                        .lineLimit(expandedIndex == index ? nil : 10)
-                        .frame(height: expandedIndex == index ? nil : 60)
-                    
-                    Button(action: {
-                        expandedIndex = (expandedIndex == index) ? nil : index
-                    }) {
-                        Text(expandedIndex == index ? "See Less" : "See More")
-                            .foregroundColor(.blue)
-                            .padding(.top, 5)
+                    ForEach(0 ..< hobbies.count, id: \.self) { index in
+                        HobbyView(hobbie: hobbies[index])
                     }
-                    
                 }
-                
+                .scaledToFill()
+                .background(Color(red: 200/255, green: 200/255, blue: 230/255))
+                .frame(height: 280)
             }
-            .scaledToFill()
-            .background(Color(red: 200/255, green: 200/255, blue: 230/255))
-            .frame(height: 280)
-
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding()
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding()
-        }
-        .defaultScrollAnchor(.bottom)
+//        .defaultScrollAnchor(.bottom)
+        .defaultScrollAnchor(.top)
     }
-        
 }
 
 #Preview {
     ContentView()
 }
+
