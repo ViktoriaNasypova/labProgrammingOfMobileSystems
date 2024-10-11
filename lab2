@@ -117,3 +117,155 @@ The image demonstrates my passion for poetry. I write a little poetry myself, if
     ContentView()
 }
 
+//
+//  ContentView.swift
+//  lab2
+//
+//  Created by IPZ-31 on 27.09.2024.
+//
+
+import SwiftUI
+struct Hobby {
+    let image: UIImage
+    let description: String
+}
+
+struct ContentView: View {
+    @State private var aboutMe: String = """
+                 Birthday 27.09.2005.
+                 I live in Lviv region.
+                 I study at the National Forestry University, specialty 121 (Software Engineering).
+                 """
+    @State private var writeSumthing: String = ""
+    @State private var isButtonClick = true
+    @State private var hobbies: [Hobby] = [
+        Hobby(image: UIImage(named: "lviv")!,
+              description: """
+Lviv is the city I was born in and adore. I also adore the rain that passes through its narrow passages.
+The city in which I study and which inspires me so much that I write poetry while walking by the parks, on my way home, or while spending time at the university.
+A city with numerous coffee shops and an absolute lack of desire to drink tea.
+"""),
+        Hobby(image: UIImage(named: "cake")!,
+              description: """
+The picture shows one of my hobbies. I love baking as well as pastries. I have been learning to cook since I was 12. And you know, I love to bake cakes and decorate them using all my creativity, provided I have the products available to me and some wishes of the people for whom I do it.
+"""),
+        Hobby(image: UIImage(named: "paint")!,
+              description: """
+The picture shows my very first hobby. After burning out, I gave it up, but I still love to draw something simple to this day. I have to say that I adore art because it can inspire!
+"""),
+        Hobby(image: UIImage(named: "nailTech")!,
+              description: """
+This image demonstrates a hobby that can also bring in money. I don't make much money from it, but it's enough to cover the cost of the material.My clients are my friends, which also allows me to see them regularly and have a good time talking.
+"""),
+        Hobby(image: UIImage(named: "poetry")!,
+              description: """
+The image demonstrates my passion for poetry. I write a little poetry myself, if you are interested, I am ready to declare it to you.
+""")
+    ]
+
+    var body: some View {
+        ScrollView {
+        ZStack{
+            RoundedRectangle(cornerRadius: 20)
+                .foregroundStyle(.gray)
+                .frame(height:250)
+            Text("Something about me)")
+                .font(.largeTitle.italic())
+                .offset(y: -50)
+            VStack {
+                TextField("Enter sumthing text...", text: $writeSumthing)
+                           .textFieldStyle(RoundedBorderTextFieldStyle())
+                           .padding()
+                   }
+                   .padding()
+        }
+        VStack{
+            VStack {
+                Circle().stroke(.black, lineWidth: 7)
+                    .fill(.gray)
+                    .frame(width: 150, height: 150)
+                    .overlay(
+                        Image(systemName: "person")
+                            .font(.system(size: 100))
+                            .foregroundColor(.white)
+                    )
+                Text("Viktoria Nasypova")
+                    .font(.title)
+                Text(aboutMe)
+                    .frame(height: 150)
+                    .padding(.top, -35)
+            }
+            //            .offset(y: -100)
+            .padding(.top, -100)
+            Button(action: {
+                withAnimation {
+                    self.isButtonClick.toggle()
+                }
+            }) {
+                Text(isButtonClick ? "Follow me!" : "Unfollow me!")
+                    .fontWeight(.light)
+                    .font(.system(size: 27))
+                    .padding(3)
+                    .background(Color.blue)
+                    .cornerRadius(5)
+                    .foregroundColor(.white)
+            }
+            .textFieldStyle(.roundedBorder)
+        }.padding()
+            
+            ScrollView(.horizontal, showsIndicators: false){
+                HStack(spacing: 10){
+                    
+                    ForEach(0 ..< hobbies.count, id: \.self) { index in
+                        HobbyView(hobbie: hobbies[index])
+                    }
+                }
+                .scaledToFill()
+                .background(Color(red: 200/255, green: 200/255, blue: 230/255))
+                .frame(height: 280)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding()
+        }
+//        .defaultScrollAnchor(.bottom)
+        .defaultScrollAnchor(.top)
+    }
+}
+
+#Preview {
+    ContentView()
+}
+
+//
+//  HobbyView.swift
+//  lr2
+//
+//  Created by IPZ-31 on 10.10.2024.
+//
+
+import SwiftUI
+
+struct HobbyView: View {
+    
+    var hobbie: Hobby
+    @State private var isExpanded = false
+    let maximumLines = 3
+    
+    var body: some View {
+        Image(uiImage: hobbie.image)
+            .resizable()
+        Text(hobbie.description)
+            .lineLimit(isExpanded ? nil : maximumLines)
+            .animation(.easeInOut, value: isExpanded)
+            .fixedSize(horizontal: false, vertical: true)
+        Button(action: {
+            isExpanded.toggle()
+        }) {
+            Text(isExpanded ? "See Less" : "See More")
+                .foregroundColor(.blue)
+        }    }
+}
+
+#Preview {
+    HobbyView(hobbie: Hobby(image: .checkmark, description: "BLa bla"))
+}
