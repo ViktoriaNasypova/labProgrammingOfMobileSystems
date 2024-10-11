@@ -50,9 +50,12 @@ The image demonstrates my passion for poetry. I write a little poetry myself, if
             RoundedRectangle(cornerRadius: 20)
                 .foregroundStyle(.gray)
                 .frame(height:250)
+            
             Text("Something about me)")
                 .font(.largeTitle.italic())
-                .offset(y: -50)
+//                .offset(y: -50)
+                .padding(.top, -65)
+            
             VStack {
                 TextField("Enter sumthing text...", text: $writeSumthing)
                            .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -76,7 +79,7 @@ The image demonstrates my passion for poetry. I write a little poetry myself, if
                     .frame(height: 150)
                     .padding(.top, -35)
             }
-            //            .offset(y: -100)
+//                        .offset(y: -100)
             .padding(.top, -100)
             Button(action: {
                 withAnimation {
@@ -101,14 +104,13 @@ The image demonstrates my passion for poetry. I write a little poetry myself, if
                         HobbyView(hobbie: hobbies[index])
                     }
                 }
-                .scaledToFill()
-                .background(Color(red: 200/255, green: 200/255, blue: 230/255))
-                .frame(height: 280)
+//                .scaledToFill()
+//                .background(Color(red: 200/255, green: 200/255, blue: 230/255))
+//                .frame(height: 300)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding()
         }
-//        .defaultScrollAnchor(.bottom)
         .defaultScrollAnchor(.top)
     }
 }
@@ -116,6 +118,7 @@ The image demonstrates my passion for poetry. I write a little poetry myself, if
 #Preview {
     ContentView()
 }
+
 
 //
 //  ContentView.swift
@@ -252,18 +255,26 @@ struct HobbyView: View {
     let maximumLines = 3
     
     var body: some View {
-        Image(uiImage: hobbie.image)
-            .resizable()
-        Text(hobbie.description)
-            .lineLimit(isExpanded ? nil : maximumLines)
-            .animation(.easeInOut, value: isExpanded)
-            .fixedSize(horizontal: false, vertical: true)
-        Button(action: {
-            isExpanded.toggle()
-        }) {
-            Text(isExpanded ? "See Less" : "See More")
-                .foregroundColor(.blue)
-        }    }
+        VStack{
+            Image(uiImage: hobbie.image)
+                .resizable()
+                .frame(width: 250, height: 200)
+            Text(hobbie.description)
+                .lineLimit(isExpanded ? nil : maximumLines)
+                .animation(.easeInOut, value: isExpanded)
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(width: 200)
+            Button(action: {
+                isExpanded.toggle()
+            }) {
+                Text(isExpanded ? "See Less" : "See More")
+                    .foregroundColor(.blue)
+            }
+        }
+        .scaledToFill()
+        .background(Color(red: 200/255, green: 200/255, blue: 230/255))
+//        .frame(width: 200)
+    }
 }
 
 #Preview {
